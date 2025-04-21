@@ -58,6 +58,7 @@ mcp_email_agent/
     ├── direct_test.py                # Test email sending without MCP
     ├── test_email.py                 # Test SMTP authentication
     ├── test_email_with_fallback.py   # Test email with fallback mechanisms
+    ├── test_mcp_tools.py             # Pytest tests for all MCP tools
     └── test_smtp_settings.py         # Test SMTP configurations
 ```
 
@@ -124,6 +125,8 @@ The MCP Email Agent implements the following tools:
 
 ## Testing and Troubleshooting
 
+### Manual Email Testing
+
 The repository includes several utility scripts in the `tests/` directory to help diagnose email connectivity issues:
 
 1. Use `tests/test_smtp_settings.py` to verify your SMTP server configuration
@@ -131,12 +134,27 @@ The repository includes several utility scripts in the `tests/` directory to hel
 3. Run `tests/direct_test.py` to attempt sending a test email directly
 4. Use `tests/test_email_with_fallback.py` for robust email testing with automatic fallback
 
-You can run tests with:
+You can run these manual tests with:
 ```
 python -m tests.test_email
 python -m tests.test_smtp_settings
 python -m tests.direct_test
 python -m tests.test_email_with_fallback
+```
+
+### Unit Tests
+
+The repository also includes pytest-based unit tests for the MCP tools:
+
+```
+pytest tests/test_mcp_tools.py
+```
+
+These tests use mocking to verify the functionality of all MCP tools without needing to connect to actual email servers. You can also run individual tests:
+
+```
+pytest tests/test_mcp_tools.py::test_poll_emails
+pytest tests/test_mcp_tools.py::test_send_text_email
 ```
 
 ## Technical Details

@@ -15,7 +15,7 @@ This repository implements an MCP-based email agent that allows AI assistants to
 git clone https://github.com/mhuang-skyward/email_agent.git
 ```
 ```
-cd MCP_Agent_Tutorial
+cd mcp_email_agent
 ```
 
 2. Create a new environment and install the required dependencies:
@@ -42,6 +42,24 @@ cp .env.example .env
 - SMTP server settings
 - Email credentials
 - Bedrock API keys (if using AWS Bedrock)
+
+## Project Structure
+
+```
+mcp_email_agent/
+│
+├── email_agent_utils.py    # Email helper functions and utilities
+├── requirements.txt        # Project dependencies
+├── sse_client.py           # MCP client implementation
+├── sse_server.py           # MCP server with email tools
+│
+└── tests/                  # Test utilities
+    ├── __init__.py
+    ├── direct_test.py                # Test email sending without MCP
+    ├── test_email.py                 # Test SMTP authentication
+    ├── test_email_with_fallback.py   # Test email with fallback mechanisms
+    └── test_smtp_settings.py         # Test SMTP configurations
+```
 
 ## Running the Application
 
@@ -104,23 +122,22 @@ The MCP Email Agent implements the following tools:
 5. The model incorporates the tool results into its final response
 6. The client displays the final response to the user
 
-### Key Files
-
-- **sse_server.py**: Implements the MCP server using Server-Sent Events (SSE)
-- **sse_client.py**: Connects to the MCP server and manages conversations
-- **email_fix.py**: Standalone function for testing email sending
-- **test_email.py**: Tests SMTP authentication
-- **test_smtp_settings.py**: Comprehensive SMTP connection testing
-- **direct_test.py**: Tests email sending without MCP framework
-
 ## Testing and Troubleshooting
 
-The repository includes several utility scripts to help diagnose email connectivity issues:
+The repository includes several utility scripts in the `tests/` directory to help diagnose email connectivity issues:
 
-1. Use **test_smtp_settings.py** to verify your SMTP server configuration
-2. Try **test_email.py** to test authentication without sending an email
-3. Run **direct_test.py** to attempt sending a test email directly
-4. If issues persist, **email_fix.py** provides fallback mechanisms for email sending
+1. Use `tests/test_smtp_settings.py` to verify your SMTP server configuration
+2. Try `tests/test_email.py` to test authentication without sending an email
+3. Run `tests/direct_test.py` to attempt sending a test email directly
+4. Use `tests/test_email_with_fallback.py` for robust email testing with automatic fallback
+
+You can run tests with:
+```
+python -m tests.test_email
+python -m tests.test_smtp_settings
+python -m tests.direct_test
+python -m tests.test_email_with_fallback
+```
 
 ## Technical Details
 

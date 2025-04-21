@@ -1,3 +1,14 @@
+"""
+Email test with fallback mechanisms.
+
+This module provides a robust way to test email sending functionality by:
+1. First attempting an SSL connection on port 465
+2. If that fails, falling back to a TLS connection on port 587
+
+This is useful for diagnosing email connectivity issues and testing 
+different connection methods automatically.
+"""
+
 import os
 import smtplib
 import ssl
@@ -6,7 +17,14 @@ from email.mime.multipart import MIMEMultipart
 from dotenv import load_dotenv
 
 def send_test_email():
-    """Send a test email using the proper configuration for Outlook"""
+    """Send a test email using a fallback approach.
+    
+    First tries an SSL connection on port 465, then falls back to 
+    TLS on port 587 if the SSL connection fails.
+    
+    Returns:
+        bool: True if email was sent successfully, False otherwise.
+    """
     load_dotenv()  # Load environment variables
     
     # Get credentials from environment
